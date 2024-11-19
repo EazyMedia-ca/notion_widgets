@@ -27,9 +27,11 @@
         table {
             border-collapse: collapse;
             table-layout: fixed;
+            position: absolute;
             background-color: #ece5f0;
-            border: 1px solid #ece5f0;
-            width: 100%;
+            border: 0px solid;
+            box-shadow: 0px 0px 0px 0px;
+            border-radius: 0px;
         }
 
         .month {
@@ -54,29 +56,33 @@
 
         td, th {
             text-align: center;
-            background-color: #ece5f0; /* Ensure the entire cell has background */
-            color: #fafafa; /* Text color for all cells */
+            background-color: #ece5f0; /* Set background color for days */
+        }
+
+        th {
             padding: 10px;
+            color: #fafafa; /* Header text color */
+            font-weight: normal;
         }
 
         td {
             padding: 0;
-            border: 1px solid #ece5f0; /* Border matches background for seamless look */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         td > span {
-            color: #fafafa; /* Day numbers text color */
+            color: #6e290c; /* Day numbers text color */
+            background-color: #ece5f0; /* Day numbers background color */
+            padding: 10px;
             display: block;
-            width: 100%;
-            height: 100%;
-            line-height: 2em;
-            text-align: center;
+            border-radius: 4px;
+            transition: border 0.3s ease, background-color 0.3s ease;
         }
 
         td.avui > span {
             font-weight: bold;
             background-color: #2EAAF4; /* Highlight current day */
-            color: #000;
+            color: #000000;
         }
 
         td.fora > span {
@@ -112,7 +118,7 @@
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="">
         <div id="calendar"></div>
     </div>
     <script>
