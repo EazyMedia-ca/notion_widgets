@@ -27,11 +27,8 @@
         table {
             border-collapse: collapse;
             table-layout: fixed;
-            position: absolute;
+            width: 100%;
             background-color: #ece5f0;
-            border: 0px solid;
-            box-shadow: 0px 0px 0px 0px;
-            border-radius: 0px;
         }
 
         .month {
@@ -56,37 +53,28 @@
 
         td, th {
             text-align: center;
-            background-color: #ece5f0; /* Set background color for days */
-        }
-
-        th {
-            padding: 10px;
-            color: #fafafa; /* Header text color */
-            font-weight: normal;
-        }
-
-        td {
+            background-color: #ece5f0; /* Ensure full background coverage */
+            color: #fafafa; /* Text color for all cells */
             padding: 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            height: 50px; /* Fixed height for consistent layout */
+            vertical-align: middle;
         }
 
         td > span {
-            color: #6e290c; /* Day numbers text color */
-            background-color: #ece5f0; /* Day numbers background color */
-            padding: 10px;
             display: block;
-            border-radius: 4px;
-            transition: border 0.3s ease, background-color 0.3s ease;
+            width: 100%;
+            height: 100%;
+            line-height: 50px; /* Center text vertically */
         }
 
-        td.avui > span {
-            font-weight: bold;
+        td.avui {
             background-color: #2EAAF4; /* Highlight current day */
-            color: #000000;
+            color: #000;
         }
 
-        td.fora > span {
-            opacity: 0.3; /* For days outside the current month */
+        td.fora {
+            opacity: 0.3; /* Dim days outside the current month */
         }
 
         .boto-next, .boto-prev {
@@ -95,156 +83,4 @@
             font-family: inherit;
             border: none;
             font-size: 25px;
-            font-weight: bold;
-            text-shadow: inherit;
-            padding: 2px 10px 5px 10px;
-            line-height: 1px;
-            height: 30px;
-            width: 30px;
-            vertical-align: middle;
-            position: absolute;
-            top: 15px;
-        }
-
-        .boto-next {
-            right: 10px;
-            padding-left: 13px;
-        }
-
-        .boto-prev {
-            left: 10px;
-            padding-right: 13px;
-        }
-    </style>
-</head>
-<body>
-    <div class="">
-        <div id="calendar"></div>
-    </div>
-    <script>
-        var months = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-
-        var days_abr = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-
-        Number.prototype.pad = function (num) {
-            var str = '';
-            for (var i = 0; i < (num - this.toString().length); i++)
-                str += '0';
-            return str += this.toString();
-        }
-
-        function calendar(widget, data) {
-            var original = widget.getElementsByClassName('actiu')[0];
-
-            if (typeof original === 'undefined') {
-                original = document.createElement('table');
-                original.setAttribute('data-actual',
-                    data.getFullYear() + '/' +
-                    data.getMonth().pad(2) + '/' +
-                    data.getDate().pad(2));
-                widget.appendChild(original);
-            }
-
-            var diff = data - new Date(original.getAttribute('data-actual'));
-            diff = new Date(diff).getMonth();
-
-            var e = document.createElement('table');
-            e.className = diff === 0 ? 'amagat-esquerra' : 'amagat-dreta';
-            e.innerHTML = '';
-
-            widget.appendChild(e);
-
-            e.setAttribute('data-actual',
-                data.getFullYear() + '/' +
-                data.getMonth().pad(2) + '/' +
-                data.getDate().pad(2));
-
-            var fila = document.createElement('tr');
-            var titol = document.createElement('th');
-            titol.setAttribute('colspan', 7);
-            titol.setAttribute('class', 'month');
-
-            var boto_prev = document.createElement('button');
-            boto_prev.className = 'boto-prev';
-            boto_prev.innerHTML = '&#9666;';
-
-            var boto_next = document.createElement('button');
-            boto_next.className = 'boto-next';
-            boto_next.innerHTML = '&#9656;';
-
-            titol.appendChild(boto_prev);
-            titol.appendChild(document.createElement('span')).innerHTML =
-                months[data.getMonth()] + '<span class="year">' + data.getFullYear() + '</span>';
-
-            titol.appendChild(boto_next);
-
-            boto_prev.onclick = function () {
-                data.setMonth(data.getMonth() - 1);
-                calendar(widget, data);
-            };
-
-            boto_next.onclick = function () {
-                data.setMonth(data.getMonth() + 1);
-                calendar(widget, data);
-            };
-
-            fila.appendChild(titol);
-            e.appendChild(fila);
-
-            fila = document.createElement('tr');
-
-            for (var i = 0; i < 7; i++) {
-                fila.innerHTML += '<th class="day-header">' + days_abr[i] + '</th>';
-            }
-
-            e.appendChild(fila);
-
-            var startDay = new Date(data.getFullYear(), data.getMonth(), 1).getDay();
-            var daysInMonth = new Date(data.getFullYear(), data.getMonth() + 1, 0).getDate();
-
-            var current = new Date(data.getFullYear(), data.getMonth(), 1 - startDay);
-
-            for (var row = 0; row < 6; row++) {
-                fila = document.createElement('tr');
-
-                for (var col = 0; col < 7; col++) {
-                    var cell = document.createElement('td');
-                    var span = document.createElement('span');
-                    span.textContent = current.getDate();
-                    cell.appendChild(span);
-
-                    if (current.getMonth() !== data.getMonth()) {
-                        cell.className = 'fora';
-                    }
-
-                    if (current.toDateString() === new Date().toDateString()) {
-                        cell.className = 'avui';
-                    }
-
-                    fila.appendChild(cell);
-                    current.setDate(current.getDate() + 1);
-                }
-
-                e.appendChild(fila);
-            }
-
-            setTimeout(() => {
-                e.className = 'actiu';
-                original.className = 'inactiu';
-            }, 20);
-
-            setTimeout(() => {
-                var inactius = widget.getElementsByClassName('inactiu');
-                for (var i = 0; i < inactius.length; i++) {
-                    widget.removeChild(inactius[i]);
-                }
-            }, 1000);
-        }
-
-        calendar(document.getElementById('calendar'), new Date());
-    </script>
-</body>
-</html>
+            font-weight:
