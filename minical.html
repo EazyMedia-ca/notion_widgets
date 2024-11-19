@@ -22,14 +22,16 @@
             margin: 0 auto;
             font-size: 14px;
             background-color: #ece5f0;
-            width: 320px; /* Fix the calendar size */
         }
 
         table {
             border-collapse: collapse;
             table-layout: fixed;
-            width: 100%; /* Ensure the table fits the calendar container */
+            position: absolute;
             background-color: #ece5f0;
+            border: 0px solid;
+            box-shadow: 0px 0px 0px 0px;
+            border-radius: 0px;
         }
 
         .month {
@@ -50,34 +52,41 @@
         .day-header {
             background-color: #747778;
             color: #fafafa;
-            height: 40px;
         }
 
         td, th {
             text-align: center;
-            background-color: #ece5f0; /* Background color for all days */
-            color: #fafafa; /* Text color */
+            background-color: #ece5f0; /* Set background color for days */
+        }
+
+        th {
+            padding: 10px;
+            color: #fafafa; /* Header text color */
+            font-weight: normal;
+        }
+
+        td {
             padding: 0;
-            border: 1px solid #ece5f0; /* Add a border for visual consistency */
-            height: 50px; /* Set consistent height for cells */
-            vertical-align: middle;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         td > span {
-            display: inline-block;
-            width: 100%;
-            height: 100%;
-            line-height: 50px; /* Align text vertically */
-            background-color: inherit; /* Ensure span inherits the td background */
+            color: #fafafa; /* Day numbers text color */
+            background-color: #ece5f0; /* Day numbers background color */
+            padding: 10px;
+            display: block;
+            border-radius: 4px;
+            transition: border 0.3s ease, background-color 0.3s ease;
         }
 
-        td.avui {
+        td.avui > span {
+            font-weight: bold;
             background-color: #2EAAF4; /* Highlight current day */
-            color: #000;
+            color: #000000;
         }
 
-        td.fora {
-            opacity: 0.5; /* Dim days outside the current month */
+        td.fora > span {
+            opacity: 0.3; /* For days outside the current month */
         }
 
         .boto-next, .boto-prev {
@@ -85,10 +94,11 @@
             color: #000;
             font-family: inherit;
             border: none;
-            font-size: 20px;
+            font-size: 25px;
             font-weight: bold;
-            padding: 5px;
-            line-height: 1;
+            text-shadow: inherit;
+            padding: 2px 10px 5px 10px;
+            line-height: 1px;
             height: 30px;
             width: 30px;
             vertical-align: middle;
@@ -98,15 +108,17 @@
 
         .boto-next {
             right: 10px;
+            padding-left: 13px;
         }
 
         .boto-prev {
             left: 10px;
+            padding-right: 13px;
         }
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="">
         <div id="calendar"></div>
     </div>
     <script>
