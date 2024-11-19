@@ -51,6 +51,7 @@
 
         .day-header {
             background-color: #747778;
+            color: #fafafa;
         }
 
         td, th {
@@ -60,7 +61,7 @@
 
         th {
             padding: 10px;
-            color: #000; /* Changed color for better visibility */
+            color: #fafafa; /* Header text color */
             font-weight: normal;
         }
 
@@ -70,16 +71,17 @@
         }
 
         td > span {
-            color: #000;
+            color: #fafafa; /* Day numbers text color */
+            background-color: #ece5f0; /* Day numbers background color */
             padding: 10px;
             display: block;
-            border: 0px solid rgba(0, 0, 0, 0.0);
-            transition: border 0.3s ease;
+            border-radius: 4px;
+            transition: border 0.3s ease, background-color 0.3s ease;
         }
 
         td.avui > span {
             font-weight: bold;
-            background-color: #2EAAF4;
+            background-color: #2EAAF4; /* Highlight current day */
             color: #000000;
         }
 
