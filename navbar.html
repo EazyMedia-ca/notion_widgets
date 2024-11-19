@@ -18,8 +18,6 @@
 		* {
 			margin: 0;
 			padding: 0;
-			-webkit-box-sizing: border-box;
-			box-sizing: border-box;
 		}
 
 
@@ -27,7 +25,7 @@
 			font-family: 'Advent Pro', sans-serif;
 			padding: 2px;
 			text-align: center;
-			margin: 7px auto;
+			margin: 2px auto;
 			width: fit-content;
 		}
 
@@ -36,16 +34,11 @@
 			text-decoration: none;
 			text-transform: uppercase;
 			display: inline-block;
-			padding: 6px;
+			padding: 2px;
 		}
 
 		.background {
 			background-color: #ece5f0;
-		}
-
-		.border {
-			border: 0px solid #cccccc;
-
 		}
 
 		.navMenu a:hover {
@@ -57,7 +50,7 @@
 
 <body>
 
-	<nav class="navMenu  border">
+	<nav class="navMenu">
 		<a id="home" onclick="navigate(this.id)" href="#"> <i class="fa-solid fa-house"></i> Home</a>
 		<a id="inbox" onclick="navigate(this.id)" href="#"> <i class="fa-solid fa-inbox"></i> Inbox</a>
 		<a id="Schedule" onclick="navigate(this.id)" href="#"> <i class="fa-regular fa-calendar-days"></i></i> Schedule</a>
